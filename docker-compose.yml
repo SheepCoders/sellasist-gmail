@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+    container_name: sellasist-app
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+    networks:
+      - sellasist-net
+
+  web:
+    image: nginx:alpine
+    container_name: sellasist-nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - sellasist-net
+
+  db:
+    image: mysql:8.0
+    container_name: sellasist-db
+    environment:
+      MYSQL_DATABASE: sellasist
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - sellasist-net
+
+networks:
+  sellasist-net:
+
+volumes:
+  dbdata:
