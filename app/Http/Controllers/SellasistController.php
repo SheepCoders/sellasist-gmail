@@ -28,7 +28,7 @@ class SellasistController extends Controller
         ]);
 
         if (!$response->ok()) {
-            return response()->json(['error' => 'Failed to fetch data'], 500);
+            return response()->json(['error' => 'Failed to fetch data for: ' . $email], 500);
         }
 
         $orders = collect($response->json())
