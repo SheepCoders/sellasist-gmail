@@ -36,7 +36,6 @@ class SellasistController extends Controller
                 return [
                     'order_id' => $order['id'] ?? null,
                     'status' => $order['status']['name'] ?? null,
-                    'tracking_number' => $order['tracking_number'] ?? null,
                     'link' => 'https://wspolceznatura.sellasist.pl/admin/orders/edit/' . ($order['id'] ?? '0'),
                 ];
             });
